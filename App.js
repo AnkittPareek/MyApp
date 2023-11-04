@@ -11,14 +11,15 @@ import {
 } from "react-native";
 
 export default function App() {
+  const defaultGoal = { text: "" };
   const [goalList, setGoalList] = useState([]);
-  const [goal, setGoal] = useState("");
+  const [goal, setGoal] = useState(defaultGoal);
   const goalInputHandler = (val) => {
-    setGoal(val);
+    setGoal({ text: val, key: Math.random().toString() }); // Not foolproof for random keys but okay for this small demo
   };
   const addGoalHandler = () => {
     setGoalList((current) => [...current, goal]);
-    setGoal("");
+    setGoal(defaultGoal);
   };
 
   return (
@@ -28,10 +29,10 @@ export default function App() {
           onChangeText={goalInputHandler}
           style={styles.textInput}
           placeholder="Your course goal"
-          value={goal}
+          value={goal.text}
         />
         <Button
-          disabled={goal.trim() === ""}
+          disabled={goal.text.trim() === ""}
           onPress={addGoalHandler}
           title="Add Goal"
         />
@@ -50,7 +51,7 @@ export default function App() {
           renderItem={(itemData) => {
             return (
               <View style={styles.goalsItem}>
-                <Text style={styles.goalsText}>{itemData.item}</Text>
+                <Text style={styles.goalsText}>{itemData.item.text}</Text>
               </View>
             );
           }}
