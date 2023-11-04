@@ -15,7 +15,7 @@ export default function App() {
   const [goalList, setGoalList] = useState([]);
   const [goal, setGoal] = useState(defaultGoal);
   const goalInputHandler = (val) => {
-    setGoal({ text: val, key: Math.random().toString() }); // Not foolproof for random keys but okay for this small demo
+    setGoal({ text: val, id: Math.random().toString() }); // Not foolproof for random keys but okay for this small demo
   };
   const addGoalHandler = () => {
     setGoalList((current) => [...current, goal]);
@@ -48,6 +48,7 @@ export default function App() {
 
         <FlatList
           data={goalList}
+          keyExtractor={(item, index) => item.id}
           renderItem={(itemData) => {
             return (
               <View style={styles.goalsItem}>
